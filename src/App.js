@@ -31,13 +31,25 @@ const tables = [
     }
 ]
 
+const errorStyle = {
+    color: 'red',
+    fontSize: '12px'
+}
+
 class MenuForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            menuName: '',
-            price: 0
+            menu: {
+                id: '',
+                menuName: '',
+                price: 0
+            }, error: {
+                errorid: null,
+                errormenuName: null,
+                errorprice: null
+            },
+            isValidForm: false
         }
     }
 
@@ -49,40 +61,80 @@ class MenuForm extends Component {
         console.log('menu form update')
     }
 
-    handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
+    handleValidation = (key, value) => {
+        let isValid;
+        if (value === '') {
+            this.setState({
+                error: {...this.state.error, [`error${key}`]: 'field is required'}
+            })
+            isValid = false
+        } else {
+            this.setState({
+                error: {...this.state.error, [`error${key}`]: ''}
+            })
+            isValid = true
+        }
+        this.handleFormValidation()
+        return isValid
+    }
+    handleFormValidation = () => {
+        this.setState((prevState) => {
+            if (prevState.error.errorid === '' && prevState.error.errormenuName === '' && prevState.error.errorprice === '') {
+                return {isValidForm: true}
+            } else {
+                return {isValidForm: false}
+            }
         })
     }
+    handleInputChange = (e) => {
+        const key = e.target.name;
+        const val = e.target.value;
+        this.setState({
+            menu: {
+                ...this.state.menu, [key]: val
+            }
+        })
+        this.handleValidation(key, val)
+    }
     handleAddMenu = () => {
-        menus.push({...this.state});
+        menus.push({...this.state.menu});
         console.log(menus);
         this.clearForm();
         this.props.handleFormUpdate();
     }
     clearForm = () => {
         this.setState({
-            id: '',
-            menuName: '',
-            price: 0
+            menu: {
+                id: '',
+                menuName: '',
+                price: 0
+            }, error: {
+                errorid: null,
+                errormenuName: null,
+                errorprice: null
+            },
+            isValidForm: false
         })
     }
 
     render() {
-        const {id, menuName, price} = this.state
+        const {menu: {id, menuName, price}, error: {errorid, errormenuName, errorprice}, isValidForm} = this.state
         return (
             <>
                 <h2>Menu Form</h2>
                 <label>id</label>
                 <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
+                {errorid && <div style={errorStyle}><small>{errorid}</small></div>}
                 <br/>
                 <label>Menu Name</label>
                 <input name='menuName' type='text' value={menuName} onChange={this.handleInputChange}/>
+                {errormenuName && <div style={errorStyle}><small>{errormenuName}</small></div>}
                 <br/>
                 <label>Price</label>
                 <input name='price' type='text' value={price} onChange={this.handleInputChange}/>
+                {errorprice && <div style={errorStyle}><small>{errorprice}</small></div>}
                 <br/>
-                <button onClick={this.handleAddMenu}>Add</button>
+                <button disabled={!isValidForm} onClick={this.handleAddMenu}>Add</button>
             </>
         )
     }
@@ -121,9 +173,16 @@ class TableForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            tableNumber: '',
-            status: 'U'
+            table: {
+                id: '',
+                tableNumber: '',
+                status: 'U'
+            },
+            error: {
+                errorid: null,
+                errortableNumber: null
+            },
+            isValidForm: false
         }
     }
 
@@ -135,35 +194,76 @@ class TableForm extends Component {
         console.log('table form update')
     }
 
-    handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
+    handleValidation = (key, value) => {
+        let isValid;
+        if (value === '') {
+            this.setState({
+                error: {...this.state.error, [`error${key}`]: 'field is required'}
+            })
+            isValid = false
+        } else {
+            this.setState({
+                error: {...this.state.error, [`error${key}`]: ''}
+            })
+            isValid = true
+        }
+        this.handleFormValidation()
+        return isValid
+    }
+
+    handleFormValidation = () => {
+        this.setState((prevState) => {
+            if (prevState.error.errorid === '' && prevState.error.errortableNumber === '') {
+                return {isValidForm: true}
+            } else {
+                return {isValidForm: false}
+            }
         })
     }
+    handleInputChange = (e) => {
+        const key = e.target.name;
+        const val = e.target.value;
+        this.setState({
+            table: {
+                ...this.state.table, [key]: val
+            }
+        })
+        this.handleValidation(key, val)
+    }
+
     handleAddTable = () => {
-        tables.push({...this.state});
+        tables.push({...this.state.table});
         console.log(tables);
         this.clearForm();
         this.props.handleFormUpdate();
     }
     clearForm = () => {
         this.setState({
-            id: '',
-            tableNumber: '',
-            status: 'U'
+            table: {
+                id: '',
+                tableNumber: '',
+                status: 'U'
+            },
+            error: {
+                errorid: null,
+                errortableNumber: null
+            },
+            isValidForm: false
         })
     }
 
     render() {
-        const {id, tableNumber, status} = this.state
+        const {table: {id, tableNumber, status}, error: {errorid, errortableNumber}, isValidForm} = this.state
         return (
             <>
                 <h2>Table Form</h2>
                 <label>id</label>
                 <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
+                {errorid && <div style={errorStyle}><small>{errorid}</small></div>}
                 <br/>
                 <label>Table Number</label>
                 <input name='tableNumber' type='text' value={tableNumber} onChange={this.handleInputChange}/>
+                {errortableNumber && <div style={errorStyle}><small>{errortableNumber}</small></div>}
                 <br/>
                 <label>Status</label>
                 <input type='radio' name='status' value='A' onChange={this.handleInputChange} checked={status === 'A'}/>
@@ -171,7 +271,7 @@ class TableForm extends Component {
                 <input type='radio' name='status' value='U' onChange={this.handleInputChange} checked={status === 'U'}/>
                 <label>Unavailable</label>
                 <br/>
-                <button onClick={this.handleAddTable}>Add</button>
+                <button disabled={!isValidForm} onClick={this.handleAddTable}>Add</button>
             </>
         )
     }
