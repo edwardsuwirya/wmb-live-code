@@ -1,0 +1,51 @@
+.navigation-container {
+    display: flex;
+    height: 100vh;
+}
+
+.navigation-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: aliceblue;
+    border-right: 1px solid gainsboro;
+}
+
+.navigation-content {
+    flex-grow: 6;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: flex-start;
+    padding: 16px 16px 0 16px;
+}
+
+.navigation-title {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 32px 0 0 8px;
+}
+
+.navigation-subtitle {
+    font-size: 0.8rem;
+    padding-left: 8px;
+}
+
+.navigation-header-menu {
+    background-color: azure;
+    padding: 16px 8px 16px 8px;
+    font-weight: bolder;
+}
+
+.navigation-menu-item {
+    padding: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.navigation-logout{
+    margin: 32px 8px 0 8px;
+}
+
+.navigation-menu-item:hover {
+    font-weight: bolder;
+}
