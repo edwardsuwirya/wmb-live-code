@@ -40,6 +40,7 @@ class MenuForm extends Component {
             price: 0
         }
     }
+
     componentDidMount() {
         console.log('menu form mounting')
     }
@@ -47,6 +48,7 @@ class MenuForm extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('menu form update')
     }
+
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -65,6 +67,7 @@ class MenuForm extends Component {
             price: 0
         })
     }
+
     render() {
         const {id, menuName, price} = this.state
         return (
@@ -72,29 +75,46 @@ class MenuForm extends Component {
                 <h2>Menu Form</h2>
                 <label>id</label>
                 <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
+                <br/>
                 <label>Menu Name</label>
                 <input name='menuName' type='text' value={menuName} onChange={this.handleInputChange}/>
+                <br/>
                 <label>Price</label>
                 <input name='price' type='text' value={price} onChange={this.handleInputChange}/>
+                <br/>
                 <button onClick={this.handleAddMenu}>Add</button>
             </>
         )
     }
 }
 
-function MenuList() {
-    return (
-        <>
-            <h2>Menu List</h2>
-            <ul>
-                {menus.map((menu) => (
-                    <li key={menu.id}>{menu.menuName} {menu.price}</li>
-                ))
-                }
-            </ul>
-        </>
-    )
+class MenuList extends Component {
+    onDelete = (id) => {
+        const response = window.confirm('Are you sure want to delete ?')
+        if (response) {
+            const index = menus.findIndex(menu => menu.id === id);
+            menus.splice(index, 1);
+            this.setState({})
+        }
+    }
 
+    render() {
+        return (
+            <>
+                <h2>Menu List</h2>
+                <ul>
+                    {menus.map((menu) => (
+                        <li key={menu.id}>
+                            {menu.menuName} {menu.price}
+                            <button onClick={() => this.onDelete(menu.id)}>Delete</button>
+                        </li>
+                    ))
+                    }
+                </ul>
+            </>
+        )
+
+    }
 }
 
 class TableForm extends Component {
@@ -141,28 +161,47 @@ class TableForm extends Component {
                 <h2>Table Form</h2>
                 <label>id</label>
                 <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
+                <br/>
                 <label>Table Number</label>
                 <input name='tableNumber' type='text' value={tableNumber} onChange={this.handleInputChange}/>
+                <br/>
                 <label>Status</label>
-                <input name='status' type='text' value={status} onChange={this.handleInputChange}/>
+                <input type='radio' name='status' value='A' onChange={this.handleInputChange} checked={status === 'A'}/>
+                <label>Available</label>
+                <input type='radio' name='status' value='U' onChange={this.handleInputChange} checked={status === 'U'}/>
+                <label>Unavailable</label>
+                <br/>
                 <button onClick={this.handleAddTable}>Add</button>
             </>
         )
     }
 }
 
-function TableList() {
-    return (
-        <>
-            <h2>Table List</h2>
-            <ul>
-                {tables.map((table) => (
-                    <li key={table.id}>{table.tableNumber} {table.status}</li>
-                ))
-                }
-            </ul>
-        </>
-    )
+class TableList extends Component {
+    onDelete = (id) => {
+        const response = window.confirm('Are you sure want to delete ?')
+        if (response) {
+            const index = tables.findIndex(menu => menu.id === id);
+            tables.splice(index, 1);
+            this.setState({})
+        }
+    }
+
+    render() {
+        return (
+            <>
+                <h2>Table List</h2>
+                <ul>
+                    {tables.map((table) => (
+                        <li key={table.id}>{table.tableNumber} {table.status}
+                            <button onClick={() => this.onDelete(table.id)}>Delete</button>
+                        </li>
+                    ))
+                    }
+                </ul>
+            </>
+        )
+    }
 }
 
 function Login(props) {
