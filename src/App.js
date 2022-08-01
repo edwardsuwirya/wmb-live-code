@@ -40,7 +40,13 @@ class MenuForm extends Component {
             price: 0
         }
     }
+    componentDidMount() {
+        console.log('menu form mounting')
+    }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('menu form update')
+    }
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -49,18 +55,27 @@ class MenuForm extends Component {
     handleAddMenu = () => {
         menus.push({...this.state});
         console.log(menus);
+        this.clearForm();
+        this.props.handleFormUpdate();
     }
-
+    clearForm = () => {
+        this.setState({
+            id: '',
+            menuName: '',
+            price: 0
+        })
+    }
     render() {
+        const {id, menuName, price} = this.state
         return (
             <>
                 <h2>Menu Form</h2>
                 <label>id</label>
-                <input name='id' type='text' onChange={this.handleInputChange}/>
+                <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
                 <label>Menu Name</label>
-                <input name='menuName' type='text' onChange={this.handleInputChange}/>
+                <input name='menuName' type='text' value={menuName} onChange={this.handleInputChange}/>
                 <label>Price</label>
-                <input name='price' type='text' onChange={this.handleInputChange}/>
+                <input name='price' type='text' value={price} onChange={this.handleInputChange}/>
                 <button onClick={this.handleAddMenu}>Add</button>
             </>
         )
@@ -92,6 +107,14 @@ class TableForm extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log('table form mounting')
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('table form update')
+    }
+
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -100,18 +123,28 @@ class TableForm extends Component {
     handleAddTable = () => {
         tables.push({...this.state});
         console.log(tables);
+        this.clearForm();
+        this.props.handleFormUpdate();
+    }
+    clearForm = () => {
+        this.setState({
+            id: '',
+            tableNumber: '',
+            status: 'U'
+        })
     }
 
     render() {
+        const {id, tableNumber, status} = this.state
         return (
             <>
                 <h2>Table Form</h2>
                 <label>id</label>
-                <input name='id' type='text' onChange={this.handleInputChange}/>
+                <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
                 <label>Table Number</label>
-                <input name='tableNumber' type='text' onChange={this.handleInputChange}/>
+                <input name='tableNumber' type='text' value={tableNumber} onChange={this.handleInputChange}/>
                 <label>Status</label>
-                <input name='status' type='text' onChange={this.handleInputChange}/>
+                <input name='status' type='text' value={status} onChange={this.handleInputChange}/>
                 <button onClick={this.handleAddTable}>Add</button>
             </>
         )
@@ -148,13 +181,20 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuthenticated: true
+            isAuthenticated: true,
+            isFormUpdate: false
         }
     }
 
     onLoggedIn = (status) => {
         this.setState({
             isAuthenticated: status
+        })
+    }
+
+    onUpdateForm = () => {
+        this.setState({
+            isFormUpdated: true
         })
     }
 
@@ -165,9 +205,9 @@ class App extends Component {
                 {
                     isAuthenticated ?
                         <>
-                            <MenuForm/>
+                            <MenuForm handleFormUpdate={this.onUpdateForm}/>
                             <MenuList/>
-                            <TableForm/>
+                            <TableForm handleFormUpdate={this.onUpdateForm}/>
                             <TableList/>
                             <button onClick={() => this.onLoggedIn(false)}>Logout</button>
                         </> : <Login handleLoggedIn={this.onLoggedIn}/>
