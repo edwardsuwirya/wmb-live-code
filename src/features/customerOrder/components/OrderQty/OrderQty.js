@@ -27,13 +27,13 @@ class OrderQty extends Component {
         return (
             <div className='order-qty-container'>
                 <div className='order-qty-content'>
-                    <div>
+                    <div className='order-qty'>
                         <label>Qty </label>
                         <input type='number' value={this.state.qty} onChange={this.handleChangeQty}/>
                     </div>
                     <div className='order-qty-button-group'>
-                        <button onClick={this.handleAddOrder}>Add</button>
-                        <button onClick={() => this.props.onCancel()}>Cancel</button>
+                        <button style={{flexGrow:1}} onClick={this.handleAddOrder}>Add</button>
+                        <button style={{flexGrow:1}} onClick={() => this.props.onCancel()}>Cancel</button>
                     </div>
                 </div>
             </div>
