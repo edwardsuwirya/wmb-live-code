@@ -38,7 +38,8 @@ class AppNavigation extends Component {
                                 <div className='navigation-header-menu'>Master</div>
                                 <div className='navigation-menu-item' onClick={() => this.onNavigate(1)}>Menu</div>
                                 <div className='navigation-menu-item' onClick={() => this.onNavigate(2)}>Table</div>
-                                <button className='navigation-logout' onClick={() => this.onLoggedIn(false)}>Logout</button>
+                                <button className='navigation-logout' onClick={() => this.onLoggedIn(false)}>Logout
+                                </button>
                             </div>
                             <div className='navigation-content'>
                                 {this.state.currentPage === 1 && <MenuView/>}

@@ -1,17 +1,8 @@
 import {Component} from "react";
-import {menus} from "../../../../data";
 import './MenuList.css';
+import {withUiState} from "../../../../shared/hoc/WithUiState";
 
 class MenuList extends Component {
-    onDelete = (id) => {
-        const response = window.confirm('Are you sure want to delete ?')
-        if (response) {
-            const index = menus.findIndex(menu => menu.id === id);
-            menus.splice(index, 1);
-            this.setState({})
-        }
-    }
-
     render() {
         return (
             <div className='menu-list-table'>
@@ -29,12 +20,12 @@ class MenuList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {menus.map((menu) => (
+                    {this.props.data.map((menu) => (
                         <tr key={menu.id}>
                             <td>{menu.menuName}</td>
                             <td>{menu.price}</td>
                             <td>
-                                <button onClick={() => this.onDelete(menu.id)}>Delete</button>
+                                <button onClick={() => this.props.onDeleteMenu(menu.id)}>Delete</button>
                             </td>
                         </tr>
                     ))
@@ -47,4 +38,4 @@ class MenuList extends Component {
     }
 }
 
-export default MenuList;
+export default withUiState(MenuList);

@@ -3,6 +3,7 @@ import {menus} from "../../../../data";
 import '../../../../App.css';
 import './MenuForm.css';
 import MenuList from "../MenuList/MenuList";
+import {withUiState} from "../../../../shared/hoc/WithUiState";
 
 class MenuForm extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class MenuForm extends Component {
                 errorprice: null
             },
             isValidForm: false,
-            isShowingForm: false
+            isShowingForm: false,
+            currentMenus: []
         }
     }
 
@@ -27,9 +29,26 @@ class MenuForm extends Component {
             isShowingForm: isShowing
         })
     }
+    onGetMenu = async () => {
+        const getMenuPromise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(menus);
+            }, 3000)
+        })
+        this.props.onShowLoading(true);
+        try {
+            const response = await getMenuPromise;
+            this.props.onShowLoading(false);
+            this.setState({
+                currentMenus: [...response]
+            })
+        } catch (e) {
+            this.props.onShowError(e.message);
+        }
+    }
 
     componentDidMount() {
-        console.log('menu form mounting')
+        this.onGetMenu();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -74,11 +93,32 @@ class MenuForm extends Component {
         })
         this.handleValidation(key, val)
     }
-    handleAddMenu = () => {
-        menus.push({...this.state.menu});
-        console.log(menus);
-        this.clearForm();
-        this.props.handleFormUpdate();
+    handleAddMenu = async () => {
+        const addMenu = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                menus.push({...this.state.menu});
+                resolve(true)
+            }, 1000)
+        })
+        this.props.onShowLoading(true);
+        try {
+            await addMenu
+            this.clearForm();
+            this.props.onShowLoading(false);
+            await this.onGetMenu();
+        } catch (e) {
+            this.props.onShowError(false);
+        }
+    }
+    handleDeleteMenu = (id) => {
+        const response = window.confirm('Are you sure want to delete ?')
+        if (response) {
+            const index = menus.findIndex(menu => menu.id === id);
+            menus.splice(index, 1);
+            this.setState({
+                currentMenus: [...menus]
+            })
+        }
     }
     clearForm = () => {
         this.setState({
@@ -100,7 +140,8 @@ class MenuForm extends Component {
         const {menu: {id, menuName, price}, error: {errorid, errormenuName, errorprice}, isValidForm} = this.state
         return (
             <>
-                <MenuList onShowingForm={this.handleShowForm}/>
+                <MenuList data={this.state.currentMenus} onDeleteMenu={this.handleDeleteMenu}
+                          onShowingForm={this.handleShowForm}/>
                 {this.state.isShowingForm &&
                     <div className='menu-form-container'>
                         <div className='menu-form-input-container'>
@@ -130,4 +171,4 @@ class MenuForm extends Component {
     }
 }
 
-export default MenuForm;
+export default withUiState(MenuForm);
