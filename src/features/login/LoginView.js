@@ -1,17 +1,13 @@
 import './LoginView.css';
 import {withUiState} from "../../shared/hoc/WithUiState";
+import AuthenticationService from "../../services/AuthenticationService";
 
 function LoginView(props) {
+    const service = AuthenticationService();
     const handleLogin = async () => {
-
-        const loginPromise = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                reject(true)
-            }, 3000)
-        })
         props.onShowLoading(true);
         try {
-            const response = await loginPromise
+            const response = await service.Authenticate({})
             props.onShowLoading(false);
             if (response) {
                 props.handleLoggedIn(true)

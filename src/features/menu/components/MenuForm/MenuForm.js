@@ -1,9 +1,9 @@
 import {Component} from "react";
-import {menus} from "../../../../data";
 import '../../../../App.css';
 import './MenuForm.css';
 import MenuList from "../MenuList/MenuList";
 import {withUiState} from "../../../../shared/hoc/WithUiState";
+import MenuService from "../../../../services/MenuService";
 
 class MenuForm extends Component {
     constructor(props) {
@@ -22,6 +22,7 @@ class MenuForm extends Component {
             isShowingForm: false,
             currentMenus: []
         }
+        this.service = MenuService();
     }
 
     handleShowForm = (isShowing) => {
@@ -30,14 +31,9 @@ class MenuForm extends Component {
         })
     }
     onGetMenu = async () => {
-        const getMenuPromise = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(menus);
-            }, 3000)
-        })
         this.props.onShowLoading(true);
         try {
-            const response = await getMenuPromise;
+            const response = await this.service.getMenu();
             this.props.onShowLoading(false);
             this.setState({
                 currentMenus: [...response]
@@ -94,15 +90,9 @@ class MenuForm extends Component {
         this.handleValidation(key, val)
     }
     handleAddMenu = async () => {
-        const addMenu = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                menus.push({...this.state.menu});
-                resolve(true)
-            }, 1000)
-        })
         this.props.onShowLoading(true);
         try {
-            await addMenu
+            const response = await this.service.addMenu(this.state.menu)
             this.clearForm();
             this.props.onShowLoading(false);
             await this.onGetMenu();
@@ -110,14 +100,17 @@ class MenuForm extends Component {
             this.props.onShowError(false);
         }
     }
-    handleDeleteMenu = (id) => {
-        const response = window.confirm('Are you sure want to delete ?')
+    handleDeleteMenu = async (id) => {
+        const response = window.confirm('Are you sure want to delete ?');
+        this.props.onShowLoading(true);
         if (response) {
-            const index = menus.findIndex(menu => menu.id === id);
-            menus.splice(index, 1);
-            this.setState({
-                currentMenus: [...menus]
-            })
+            try {
+                const response = await this.service.deleteMenu(id);
+                this.props.onShowLoading(false);
+                await this.onGetMenu()
+            } catch (e) {
+                this.props.onShowError(false);
+            }
         }
     }
     clearForm = () => {
