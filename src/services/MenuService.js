@@ -9,6 +9,20 @@ const MenuService = () => {
         })
     }
 
+    const getMenuByCategory = async (category) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const menuByCategory = []
+                for (let menu of menus) {
+                    if (menu.category === category) {
+                        menuByCategory.push(menu)
+                    }
+                }
+                resolve(menuByCategory);
+            }, 2000)
+        })
+    }
+
     const addMenu = async (newMenu) => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -28,7 +42,7 @@ const MenuService = () => {
         })
     }
     return {
-        getMenu, addMenu, deleteMenu
+        getMenu, addMenu, deleteMenu, getMenuByCategory
     }
 }
 

@@ -1,0 +1,21 @@
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    margin: 8px;
+    width: 64px;
+    cursor: pointer;
+    box-shadow: 3px 5px 9px #888888;
+    border-radius: 5px;
+}
+
+.menu-item-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu-header{
+    background-color: aquamarine;
+}

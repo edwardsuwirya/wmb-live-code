@@ -6,17 +6,16 @@
 .navigation-sidebar {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex-basis: 15%;
     background-color: aliceblue;
     border-right: 1px solid gainsboro;
 }
 
 .navigation-content {
-    flex-grow: 6;
+    flex-basis: 85%;
     background-color: whitesmoke;
     display: flex;
     justify-content: flex-start;
-    padding: 16px 16px 0 16px;
 }
 
 .navigation-title {

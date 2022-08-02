@@ -12,7 +12,8 @@ class MenuForm extends Component {
             menu: {
                 id: '',
                 menuName: '',
-                price: 0
+                price: 0,
+                category: 'food'
             }, error: {
                 errorid: null,
                 errormenuName: null,
@@ -79,6 +80,7 @@ class MenuForm extends Component {
     handleInputChange = (e) => {
         const key = e.target.name;
         let val = e.target.value;
+        console.log(key, val)
         if (key === 'price') {
             val = Number(val.replace(/\D/, ''))
         }
@@ -118,7 +120,8 @@ class MenuForm extends Component {
             menu: {
                 id: '',
                 menuName: '',
-                price: 0
+                price: 0,
+                category: 'food'
             }, error: {
                 errorid: null,
                 errormenuName: null,
@@ -153,6 +156,12 @@ class MenuForm extends Component {
                             <label>Price</label>
                             <input name='price' type='text' value={price} onChange={this.handleInputChange}/>
                             {errorprice && <div className='form-input-error'><small>{errorprice}</small></div>}
+                            <br/>
+                            <label>Category</label>
+                            <select name="category" onChange={this.handleInputChange}>
+                                <option value='food'>Food</option>
+                                <option value='beverage'>Beverage</option>
+                            </select>
                             <br/>
                             <button disabled={!isValidForm} onClick={this.handleAddMenu}>Add</button>
                         </div>
