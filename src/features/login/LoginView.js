@@ -1,11 +1,11 @@
 import './LoginView.css';
 import {withUiState} from "../../shared/hoc/WithUiState";
-import AuthenticationService from "../../services/AuthenticationService";
 import {userLogin} from "./state/AuthenticationAction";
 import {connect} from "react-redux";
+import {withDep} from "../../shared/hoc/WIthDep";
 
 function LoginView(props) {
-    const service = AuthenticationService();
+    const service = props.AuthenticationService;
     const handleLogin = async () => {
         props.onShowLoading(true);
         try {
@@ -35,4 +35,4 @@ function LoginView(props) {
 const mapDispatchToProps = {
     userLogin,
 }
-export default connect(null, mapDispatchToProps)(withUiState(LoginView));
+export default connect(null, mapDispatchToProps)(withDep(withUiState(LoginView), ['AuthenticationService']));

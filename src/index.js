@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {register} from "./deps";
+import AuthenticationService from "./services/AuthenticationService";
+import MenuService from "./services/MenuService";
 import {setupStore} from "./store";
 import {Provider} from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = setupStore();
+(_ => {
+    register('AuthenticationService', AuthenticationService())
+    register('MenuService', MenuService())
+})()
 
 root.render(
     <React.StrictMode>
