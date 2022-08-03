@@ -1,9 +1,9 @@
 import './LoginView.css';
 import {withUiState} from "../../shared/hoc/WithUiState";
-import AuthenticationService from "../../services/AuthenticationService";
+import {withDep} from "../../shared/hoc/WIthDep";
 
 function LoginView(props) {
-    const service = AuthenticationService();
+    const service = props.AuthenticationService;
     const handleLogin = async () => {
         props.onShowLoading(true);
         try {
@@ -28,4 +28,4 @@ function LoginView(props) {
     )
 }
 
-export default withUiState(LoginView);
+export default withDep(withUiState(LoginView), ['AuthenticationService'])

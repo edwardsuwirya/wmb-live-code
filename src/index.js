@@ -3,12 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {register} from "./deps";
+import AuthenticationService from "./services/AuthenticationService";
+import MenuService from "./services/MenuService";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+(_ => {
+    register('AuthenticationService', AuthenticationService())
+    register('MenuService', MenuService())
+})()
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

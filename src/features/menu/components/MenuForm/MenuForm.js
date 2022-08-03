@@ -4,6 +4,7 @@ import './MenuForm.css';
 import MenuList from "../MenuList/MenuList";
 import {withUiState} from "../../../../shared/hoc/WithUiState";
 import MenuService from "../../../../services/MenuService";
+import {withDep} from "../../../../shared/hoc/WIthDep";
 
 class MenuForm extends Component {
     constructor(props) {
@@ -164,4 +165,4 @@ class MenuForm extends Component {
     }
 }
 
-export default withUiState(MenuForm);
+export default withDep(withUiState(MenuForm),['MenuService']);

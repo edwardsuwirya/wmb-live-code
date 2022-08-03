@@ -1,6 +1,7 @@
 import {Component} from "react";
 import './MenuList.css';
 import {withUiState} from "../../../../shared/hoc/WithUiState";
+import {withDep} from "../../../../shared/hoc/WIthDep";
 
 class MenuList extends Component {
     render() {
@@ -38,4 +39,4 @@ class MenuList extends Component {
     }
 }
 
-export default withUiState(MenuList);
+export default withDep(withUiState(MenuList), ['MenuService']);
