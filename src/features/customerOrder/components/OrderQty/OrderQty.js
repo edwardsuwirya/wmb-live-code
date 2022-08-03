@@ -29,7 +29,7 @@ class OrderQty extends Component {
                 <div className='order-qty-content'>
                     <div className='order-qty'>
                         <label>Qty </label>
-                        <input type='number' value={this.state.qty} onChange={this.handleChangeQty}/>
+                        <input className='order-qty-form-input' type='number' value={this.state.qty} onChange={this.handleChangeQty}/>
                     </div>
                     <div className='order-qty-button-group'>
                         <button style={{flexGrow:1}} onClick={this.handleAddOrder}>Add</button>

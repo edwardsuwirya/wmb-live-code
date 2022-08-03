@@ -2,16 +2,18 @@ import {Component} from "react";
 import './MenuList.css';
 import {withUiState} from "../../../../shared/hoc/WithUiState";
 import {withDep} from "../../../../shared/hoc/WIthDep";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAdd, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class MenuList extends Component {
     render() {
         return (
             <div className='menu-list-table'>
-                <h2>Menu List</h2>
-                <button onClick={() => {
+                <div className='menu-list-header menu-list-color'>Menu List</div>
+                <div className='menu-list-action' onClick={() => {
                     this.props.onShowingForm(true)
-                }}>Add menu
-                </button>
+                }}><FontAwesomeIcon icon={faAdd}/>&nbsp;&nbsp;Add menu
+                </div>
                 <table width='100%'>
                     <thead>
                     <tr className='menu-list-table-header'>
@@ -25,8 +27,10 @@ class MenuList extends Component {
                         <tr key={menu.id}>
                             <td>{menu.menuName}</td>
                             <td>{menu.price}</td>
-                            <td>
-                                <button onClick={() => this.props.onDeleteMenu(menu.id)}>Delete</button>
+                            <td align='center'>
+                                <div onClick={() => this.props.onDeleteMenu(menu.id)}>
+                                    <FontAwesomeIcon className='menu-list-color' icon={faTrash}/>
+                                </div>
                             </td>
                         </tr>
                     ))

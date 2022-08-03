@@ -4,9 +4,10 @@
     border: 1px solid whitesmoke;
     padding: 16px;
     justify-content: center;
-    background-color: aliceblue;
+    background-color: rgb(102, 108, 106);
     width: 25%;
     box-shadow: 5px 10px 18px #888888;
+    color: whitesmoke;
 }
 
 .menu-form-header {
@@ -26,4 +27,12 @@
     align-items: center;
     justify-content: center;
     z-index: 101;
+}
+
+.menu-form-input{
+    height: 32px;
+    outline: none;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
 }

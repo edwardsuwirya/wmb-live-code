@@ -6,6 +6,8 @@ import './AppNavigation.css';
 import {userLogout} from "../features/login/state/AuthenticationAction";
 import {connect} from "react-redux";
 import CustomerOrderView from "../features/customerOrder/CustomerOrderView";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBowlFood, faChair, faKitchenSet, faUser} from "@fortawesome/free-solid-svg-icons";
 
 class AppNavigation extends Component {
     constructor(props) {
@@ -31,17 +33,18 @@ class AppNavigation extends Component {
                                 <span className='navigation-title'>WMB</span>
                                 <small className='navigation-subtitle'>version 1.0.0</small>
                                 <br/>
-                                <small className='navigation-subtitle'>Active
+                                <small className='navigation-subtitle'><FontAwesomeIcon icon={faUser}/>&nbsp;&nbsp; Active
                                     User: {this.props.authentication.userName}</small>
                                 <div className='navigation-header-menu'>Transaction</div>
-                                <div className='navigation-menu-item' onClick={() => this.onNavigate(3)}>Customer
-                                    Order
+                                <div className='navigation-menu-item' onClick={() => this.onNavigate(3)}>
+                                    <FontAwesomeIcon icon={faBowlFood}/>&nbsp;&nbsp;Customer Order
                                 </div>
                                 <div className='navigation-header-menu'>Master</div>
-                                <div className='navigation-menu-item' onClick={() => this.onNavigate(1)}>Menu</div>
-                                <div className='navigation-menu-item' onClick={() => this.onNavigate(2)}>Table</div>
-                                <button className='navigation-logout' onClick={() => this.props.userLogout()}>Logout
-                                </button>
+                                <div className='navigation-menu-item' onClick={() => this.onNavigate(1)}><FontAwesomeIcon icon={faKitchenSet}/>&nbsp;&nbsp; Menu</div>
+                                <div className='navigation-menu-item' onClick={() => this.onNavigate(2)}><FontAwesomeIcon icon={faChair}/>&nbsp;&nbsp; Table</div>
+                                <div className='navigation-logout logout-button'
+                                     onClick={() => this.props.userLogout()}>Logout
+                                </div>
                             </div>
                             <div className='navigation-content'>
                                 {this.state.currentPage === 1 && <MenuView/>}

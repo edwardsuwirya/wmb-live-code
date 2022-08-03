@@ -2,6 +2,8 @@ import {clearOrder} from "../../state/CustomerOrderAction";
 import {connect} from "react-redux";
 import {Component} from "react";
 import './OrderList.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBeerMugEmpty} from "@fortawesome/free-solid-svg-icons";
 
 class OrderList extends Component {
     handleClearOrder = () => {
@@ -14,11 +16,11 @@ class OrderList extends Component {
 
     render() {
         return (
-            <>
+            <div>
                 {
-                    this.props.order.orderItems.map((o,idx) => {
+                    this.props.order.orderItems.map((o, idx) => {
                         return (
-                            <div key={idx} className='order-item'>
+                            <div key={idx} className='order-item app-color'>
                                 <div>{o.qty} {o.menu.menuName}</div>
                                 <div>{o.menu.price * o.qty}</div>
                             </div>)
@@ -26,15 +28,18 @@ class OrderList extends Component {
                 }
                 {this.props.order.orderItems.length > 0 ? <>
                     <div
-                        className='order-total'>
+                        className='order-total app-color'>
                         <div>Total</div>
                         {this.props.order.total}
                     </div>
                     <br/>
-                    <div className='order-action'>Order</div>
-                    <div className='cancel-action' onClick={this.handleClearOrder}>Cancel</div>
-                </> : <p>No Items</p>}
-            </>
+                    <div className='order-action app-color'>Order</div>
+                    <div className='cancel-action app-color' onClick={this.handleClearOrder}>Cancel</div>
+                </> : <div className='order-list-empty'>
+                    <FontAwesomeIcon icon={faBeerMugEmpty}/>
+                    <div>No Items</div>
+                </div>}
+            </div>
         )
     }
 }

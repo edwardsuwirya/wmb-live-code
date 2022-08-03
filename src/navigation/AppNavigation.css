@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     flex-basis: 15%;
-    background-color: aliceblue;
+    background-color: rgb(102, 108, 106);
     border-right: 1px solid gainsboro;
 }
 
@@ -19,26 +19,31 @@
 }
 
 .navigation-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bolder;
-    padding: 32px 0 0 8px;
+    padding: 32px 0 0 16px;
+    color: whitesmoke;
 }
 
 .navigation-subtitle {
     font-size: 0.8rem;
-    padding-left: 8px;
+    padding-left: 16px;
+    color: whitesmoke;
+    margin-bottom: 8px;
 }
 
 .navigation-header-menu {
-    background-color: azure;
-    padding: 16px 8px 16px 8px;
+    background-color: whitesmoke;
+    padding: 16px 8px 16px 16px;
     font-weight: bolder;
+    color: rgb(94, 94, 94);
 }
 
 .navigation-menu-item {
-    padding: 8px;
-    font-size: 0.8rem;
+    padding: 16px;
+    font-size: 1rem;
     cursor: pointer;
+    color: whitesmoke;
 }
 
 .navigation-logout{
@@ -47,4 +52,15 @@
 
 .navigation-menu-item:hover {
     font-weight: bolder;
+}
+.logout-button {
+    background-color: whitesmoke;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgb(94, 94, 94);
 }

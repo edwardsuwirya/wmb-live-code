@@ -15,13 +15,14 @@
 }
 
 .order-qty-content{
-    background-color: aliceblue;
+    background-color:  rgb(102, 108, 106);
     height: 100px;
     width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 16px;
+    color: whitesmoke;
 }
 
 .order-qty-button-group{
@@ -34,4 +35,11 @@
     display: flex;
     flex-direction: column;
     gap: 3px;
+}
+.order-qty-form-input{
+    height: 32px;
+    outline: none;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
 }

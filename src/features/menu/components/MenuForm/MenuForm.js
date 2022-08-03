@@ -105,8 +105,8 @@ class MenuForm extends Component {
     }
     handleDeleteMenu = async (id) => {
         const response = window.confirm('Are you sure want to delete ?');
-        this.props.onShowLoading(true);
         if (response) {
+            this.props.onShowLoading(true);
             try {
                 const response = await this.service.deleteMenu(id);
                 this.props.onShowLoading(false);
@@ -146,20 +146,20 @@ class MenuForm extends Component {
                                 <h2>Menu Form</h2>
                                 <button onClick={() => this.handleShowForm(false)}>X</button>
                             </div>
-                            <label>id</label>
-                            <input name='id' type='text' value={id} onChange={this.handleInputChange}/>
+                            <label>Id</label>
+                            <input className='menu-form-input' name='id' type='text' value={id} onChange={this.handleInputChange}/>
                             {errorid && <div className='form-input-error'><small>{errorid}</small></div>}
                             <br/>
                             <label>Menu Name</label>
-                            <input name='menuName' type='text' value={menuName} onChange={this.handleInputChange}/>
+                            <input className='menu-form-input' name='menuName' type='text' value={menuName} onChange={this.handleInputChange}/>
                             {errormenuName && <div className='form-input-error'><small>{errormenuName}</small></div>}
                             <br/>
                             <label>Price</label>
-                            <input name='price' type='text' value={price} onChange={this.handleInputChange}/>
+                            <input className='menu-form-input' name='price' type='text' value={price} onChange={this.handleInputChange}/>
                             {errorprice && <div className='form-input-error'><small>{errorprice}</small></div>}
                             <br/>
                             <label>Category</label>
-                            <select name="category" onChange={this.handleInputChange}>
+                            <select className='menu-form-input' name="category" onChange={this.handleInputChange}>
                                 <option value='food'>Food</option>
                                 <option value='beverage'>Beverage</option>
                             </select>

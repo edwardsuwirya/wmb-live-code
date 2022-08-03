@@ -1,8 +1,75 @@
 .login-container {
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
     height: 100vh;
     width: 100vw;
+    background-color: rgb(102, 108, 106);
+}
+
+.login-section {
+    display: flex;
+    width: 75%;
+    height: 80%;
+    background-color: white;
+}
+
+.login-image-section {
+    flex-basis: 50%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-form-section {
+    display: flex;
+    flex-direction: column;
+
+    flex-basis: 50%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.login-color {
+    color: rgb(94, 94, 94);
+}
+
+.login-header {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+    gap: 16px;
+}
+
+.login-input {
+    height: 32px;
+    outline: none;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+}
+
+.login-button {
+    background-color: rgb(102, 108, 106);
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+.login-button:hover{
+    background-color: rgb(102, 108, 106);
 }

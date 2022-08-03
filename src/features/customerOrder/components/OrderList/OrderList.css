@@ -4,7 +4,7 @@
     margin: 4px;
     background-color: white;
     padding: 16px;
-    border-left: 3px solid darkturquoise;
+    border-left: 3px solid rgb(102, 108, 106);
     border-radius: 5px;
 }
 
@@ -33,4 +33,12 @@
     cursor: pointer;
     box-shadow: 3px 5px 9px #888888;
     font-weight: bolder;
+}
+
+.order-list-empty{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

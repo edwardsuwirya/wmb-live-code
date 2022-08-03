@@ -62,7 +62,7 @@ class OrderMenu extends Component {
 
     render() {
         return (
-            <>
+            <div>
                 <div className='menu-item-container'>
                     <div className='menu-item menu-header' onClick={() => this.handleGetFoodMenu('food')}>Food</div>
                     <div className='menu-item menu-header' onClick={() => this.handleGetFoodMenu('beverage')}>Bev
@@ -72,13 +72,13 @@ class OrderMenu extends Component {
                 <div className='menu-item-container'>
                     {
                         this.state.menuList.map((f) => {
-                            return (<div className='menu-item' onClick={() => this.handleShowingQty(f)}
+                            return (<div className='menu-item app-color' onClick={() => this.handleShowingQty(f)}
                                          key={f.id}>{f.menuName}</div>)
                         })
                     }
                 </div>
                 {this.state.isShowingQty && <OrderQty onAddOrder={this.handleAddOrder} onCancel={this.handleShowingQty}/>}
-            </>
+            </div>
         )
     }
 }

@@ -21,10 +21,19 @@ function LoginView(props) {
     }
     return (
         <div className='login-container'>
-            <h2>WMB Login</h2>
-            <div>
-                <button onClick={handleLogin}>Login
-                </button>
+            <div className='login-section'>
+                <div className='login-image-section'>
+                </div>
+                <div className='login-form-section'>
+                    <div className='login-header login-color'>Welcome To WMB <br/> Management System</div>
+                    <div className='login-form'>
+                        <label className='login-color'>User Name</label>
+                        <input className='login-input' type='text'/>
+                        <label className='login-color'>Password</label>
+                        <input className='login-input' type='password'/>
+                        <div className='login-button' onClick={handleLogin}>Login</div>
+                    </div>
+                </div>
             </div>
         </div>
     )
