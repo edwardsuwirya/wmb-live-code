@@ -3,7 +3,9 @@ const AuthenticationService = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(true);
-            }, 3000)
+                // reject(new Error('Unauthorized'))
+            }, 1000)
+
         })
     }
     return {

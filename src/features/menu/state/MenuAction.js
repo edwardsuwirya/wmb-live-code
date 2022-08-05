@@ -1,4 +1,5 @@
 import {MENU_ACTION_TYPE} from "../../../shared/constants";
+import {RequestHelper} from "../../../services/RequestHelper";
 
 export function addFBMenu(food, bev) {
     return {
@@ -7,4 +8,12 @@ export function addFBMenu(food, bev) {
             food, bev
         }
     }
+}
+
+export const menuAction = (request) => async (dispatch) => {
+    const result = await RequestHelper(dispatch, request);
+    if (result) {
+        dispatch({type: 'success', payload: {data: result}})
+    }
+
 }

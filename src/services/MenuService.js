@@ -5,6 +5,7 @@ const MenuService = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(menus);
+                // reject(new Error('Failed to get data'))
             }, 2000)
         })
     }

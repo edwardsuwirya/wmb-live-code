@@ -2,9 +2,11 @@ import {Component} from "react";
 import '../../../../App.css';
 import './MenuForm.css';
 import MenuList from "../MenuList/MenuList";
-import {withUiState} from "../../../../shared/hoc/WithUiState";
-import MenuService from "../../../../services/MenuService";
 import {DepContext} from "../../../../depContext";
+import {connect} from "react-redux";
+import {menuAction} from "../../state/MenuAction";
+import UIState from "../../../../shared/uistate/UIState";
+import MessageBox from "../../../../shared/components/messageBox/MessageBox";
 
 class MenuForm extends Component {
     constructor(props) {
@@ -24,7 +26,6 @@ class MenuForm extends Component {
             isShowingForm: false,
             currentMenus: []
         }
-        this.service = MenuService();
     }
 
     handleShowForm = (isShowing) => {
@@ -33,16 +34,10 @@ class MenuForm extends Component {
         })
     }
     onGetMenu = async () => {
-        this.props.onShowLoading(true);
-        try {
-            const response = await this.context.menuService.getMenu();
-            this.props.onShowLoading(false);
-            this.setState({
-                currentMenus: [...response]
-            })
-        } catch (e) {
-            this.props.onShowError(e.message);
-        }
+        await this.props.menuAction(() => this.context.menuService.getMenu());
+        this.setState({
+            currentMenus: [...this.props.uiState.data]
+        })
     }
 
     componentDidMount() {
@@ -93,27 +88,15 @@ class MenuForm extends Component {
         this.handleValidation(key, val)
     }
     handleAddMenu = async () => {
-        this.props.onShowLoading(true);
-        try {
-            const response = await this.context.menuService.addMenu(this.state.menu)
-            this.clearForm();
-            this.props.onShowLoading(false);
-            await this.onGetMenu();
-        } catch (e) {
-            this.props.onShowError(false);
-        }
+        await this.props.menuAction(() => this.context.menuService.addMenu(this.state.menu));
+        this.clearForm();
+        await this.onGetMenu();
     }
     handleDeleteMenu = async (id) => {
         const response = window.confirm('Are you sure want to delete ?');
         if (response) {
-            this.props.onShowLoading(true);
-            try {
-                const response = await this.context.menuService.deleteMenu(id);
-                this.props.onShowLoading(false);
-                await this.onGetMenu()
-            } catch (e) {
-                this.props.onShowError(false);
-            }
+            await this.props.menuAction(() => this.context.menuService.deleteMenu(id));
+            await this.onGetMenu();
         }
     }
     clearForm = () => {
@@ -136,7 +119,7 @@ class MenuForm extends Component {
     render() {
         const {menu: {id, menuName, price}, error: {errorid, errormenuName, errorprice}, isValidForm} = this.state
         return (
-            <>
+            <UIState>
                 <MenuList data={this.state.currentMenus} onDeleteMenu={this.handleDeleteMenu}
                           onShowingForm={this.handleShowForm}/>
                 {this.state.isShowingForm &&
@@ -154,7 +137,8 @@ class MenuForm extends Component {
                             <label>Menu Name</label>
                             <input className='menu-form-input' name='menuName' type='text' value={menuName}
                                    onChange={this.handleInputChange}/>
-                            {errormenuName && <div className='form-input-error'><small>{errormenuName}</small></div>}
+                            {errormenuName &&
+                                <div className='form-input-error'><small>{errormenuName}</small></div>}
                             <br/>
                             <label>Price</label>
                             <input className='menu-form-input' name='price' type='text' value={price}
@@ -171,12 +155,20 @@ class MenuForm extends Component {
                         </div>
                     </div>
                 }
-            </>
+                {this.props.uiState.error && <MessageBox title={this.props.uiState.error}/>}
+            </UIState>
 
         )
     }
 }
 
 MenuForm.contextType = DepContext
-
-export default withUiState(MenuForm);
+const mapStateToProps = state => {
+    return {
+        uiState: state.UIReducer
+    }
+}
+const mapDispatchToProps = {
+    menuAction
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MenuForm);
