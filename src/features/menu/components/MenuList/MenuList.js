@@ -1,7 +1,6 @@
 import {Component} from "react";
 import './MenuList.css';
 import {withUiState} from "../../../../shared/hoc/WithUiState";
-import {withDep} from "../../../../shared/hoc/WIthDep";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAdd, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -39,8 +38,7 @@ class MenuList extends Component {
                 </table>
             </div>
         )
-
     }
 }
 
-export default withDep(withUiState(MenuList), ['MenuService']);
+export default withUiState(MenuList);

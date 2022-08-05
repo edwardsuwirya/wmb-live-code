@@ -4,7 +4,7 @@ import './MenuForm.css';
 import MenuList from "../MenuList/MenuList";
 import {withUiState} from "../../../../shared/hoc/WithUiState";
 import MenuService from "../../../../services/MenuService";
-import {withDep} from "../../../../shared/hoc/WIthDep";
+import {DepContext} from "../../../../depContext";
 
 class MenuForm extends Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class MenuForm extends Component {
     onGetMenu = async () => {
         this.props.onShowLoading(true);
         try {
-            const response = await this.service.getMenu();
+            const response = await this.context.menuService.getMenu();
             this.props.onShowLoading(false);
             this.setState({
                 currentMenus: [...response]
@@ -95,7 +95,7 @@ class MenuForm extends Component {
     handleAddMenu = async () => {
         this.props.onShowLoading(true);
         try {
-            const response = await this.service.addMenu(this.state.menu)
+            const response = await this.context.menuService.addMenu(this.state.menu)
             this.clearForm();
             this.props.onShowLoading(false);
             await this.onGetMenu();
@@ -108,7 +108,7 @@ class MenuForm extends Component {
         if (response) {
             this.props.onShowLoading(true);
             try {
-                const response = await this.service.deleteMenu(id);
+                const response = await this.context.menuService.deleteMenu(id);
                 this.props.onShowLoading(false);
                 await this.onGetMenu()
             } catch (e) {
@@ -147,15 +147,18 @@ class MenuForm extends Component {
                                 <button onClick={() => this.handleShowForm(false)}>X</button>
                             </div>
                             <label>Id</label>
-                            <input className='menu-form-input' name='id' type='text' value={id} onChange={this.handleInputChange}/>
+                            <input className='menu-form-input' name='id' type='text' value={id}
+                                   onChange={this.handleInputChange}/>
                             {errorid && <div className='form-input-error'><small>{errorid}</small></div>}
                             <br/>
                             <label>Menu Name</label>
-                            <input className='menu-form-input' name='menuName' type='text' value={menuName} onChange={this.handleInputChange}/>
+                            <input className='menu-form-input' name='menuName' type='text' value={menuName}
+                                   onChange={this.handleInputChange}/>
                             {errormenuName && <div className='form-input-error'><small>{errormenuName}</small></div>}
                             <br/>
                             <label>Price</label>
-                            <input className='menu-form-input' name='price' type='text' value={price} onChange={this.handleInputChange}/>
+                            <input className='menu-form-input' name='price' type='text' value={price}
+                                   onChange={this.handleInputChange}/>
                             {errorprice && <div className='form-input-error'><small>{errorprice}</small></div>}
                             <br/>
                             <label>Category</label>
@@ -174,4 +177,6 @@ class MenuForm extends Component {
     }
 }
 
-export default withDep(withUiState(MenuForm),['MenuService']);
+MenuForm.contextType = DepContext
+
+export default withUiState(MenuForm);

@@ -3,23 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {register} from "./deps";
-import AuthenticationService from "./services/AuthenticationService";
-import MenuService from "./services/MenuService";
 import {setupStore} from "./store";
 import {Provider} from "react-redux";
+import {DepContextProvider} from "./depContext";
+import {ServiceFactory} from "./services/ServiceFactory";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = setupStore();
-(_ => {
-    register('AuthenticationService', AuthenticationService())
-    register('MenuService', MenuService())
-})()
+const services = ServiceFactory();
 
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App/>
+            <DepContextProvider services={services}>
+                <App/>
+            </DepContextProvider>
         </Provider>
     </React.StrictMode>
 );
